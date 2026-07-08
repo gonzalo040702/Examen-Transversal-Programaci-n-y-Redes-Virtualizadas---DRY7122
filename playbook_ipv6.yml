@@ -1,0 +1,13 @@
+---
+- name: Configurar IPv6 en Loopback 44
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+    - name: Asignar IPv6 y link-local a Loopback 44
+      ios_config:
+        lines:
+          - ipv6 address 3001:ABCD:ABCD:4::4/128
+          - ipv6 address FE80::1 link-local
+          - no shutdown
+        parents: interface Loopback44

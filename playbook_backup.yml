@@ -1,0 +1,16 @@
+---
+- name: Backup configuracion del router
+  hosts: routers
+  gather_facts: false
+
+  tasks:
+    - name: Obtener running-config
+      ios_command:
+        commands:
+          - show running-config
+      register: output
+
+    - name: Guardar backup en archivo
+      copy:
+        content: "{{ output.stdout[0] }}"
+        dest: "/home/devasc/ExamenTransversal/backup_router.txt"
